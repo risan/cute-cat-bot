@@ -1,6 +1,6 @@
 # Cute Cat Bot
 
-[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/risan/messenger-client)
+[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/risan/cute-cat-bot)
 [![License](https://img.shields.io/github/license/risan/cute-cat-bot.svg)](https://github.com/risan/cute-cat-bot/blob/master/LICENSE.md)
 
 A Facebook Messenger bot that will reply your chat with a cute cat GIF. Try it [here](https://m.me/CuteCatBot)!
