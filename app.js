@@ -3,6 +3,8 @@ const config = require('config');
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.get('/', function (req, res) {
   res.send("Hello I'm a Cute Cat Bot 🐱");
 });
