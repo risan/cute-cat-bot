@@ -1,0 +1,4 @@
+{
+	"port": 3000,
+	"verify_token": "YOUR_VERIFY_TOKEN"
+}
