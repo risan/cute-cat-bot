@@ -65,7 +65,13 @@ function sendTextMessage(recipientId, message) {
       id: recipientId
     },
     message: {
-      text: message
+      text: message,
+      attachment: {
+        type: 'image',
+        payload: {
+          url: 'https://scontent.xx.fbcdn.net/v/t1.0-9/16174555_1489190527788551_8556181663141456754_n.jpg?oh=c6badb5fe8a300d6ba2d531ea405e84e&oe=591A3117'
+        }
+      }
     }
   });
 }
