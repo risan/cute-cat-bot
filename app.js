@@ -95,8 +95,7 @@ function getRandomCatVideoMessage() {
             default_action: {
               type: 'web_url',
               url: data.url,
-              messenger_extensions: true,
-              webview_height_ratio: 'tall'
+              messenger_extensions: false
             },
             buttons: [
               {
