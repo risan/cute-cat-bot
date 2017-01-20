@@ -125,7 +125,7 @@ function retrieveCatVideoIds(onSuccess) {
 function getRandomCatVideoUrl() {
   const id = catVideoIds[Math.floor(Math.random() * catVideoIds.length)];
 
-  return `https://www.facebook.com/HappyCatsOnline/videos/${id}`;
+  return `https://www.facebook.com/video/embed?video_id=${id}`;
 }
 
 app.listen(config.port, function () {
