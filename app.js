@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const request = require('request');
 
 const app = express();
+let catVideoIds = [];
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -66,9 +67,9 @@ function sendTextMessage(recipientId, message) {
     },
     message: {
       attachment: {
-        type: 'image',
+        type: 'video',
         payload: {
-          url: 'https://scontent.xx.fbcdn.net/v/t1.0-9/16174555_1489190527788551_8556181663141456754_n.jpg?oh=c6badb5fe8a300d6ba2d531ea405e84e&oe=591A3117'
+          url: getRandomCatVideoUrl()
         }
       }
     }
@@ -94,6 +95,43 @@ function sendMessage(data) {
   });
 }
 
+function retrieveCatVideoIds(onSuccess) {
+  request({
+    method: 'GET',
+    uri: 'https://graph.facebook.com/v2.6/HappyCatsOnline/videos',
+    qs: {
+      access_token: config.page_access_token
+    },
+  }, function (error, response, body) {
+    if (! error && response.statusCode === 200) {
+      body = JSON.parse(body);
+      const data = body.data;
+      let videoIds = [];
+
+      data.forEach(function (item) {
+        videoIds.push(item.id);
+      });
+
+      onSuccess(videoIds);
+      console.log(`👍 Successfully fetch ${videoIds.length} cat videos.`);
+    } else {
+      console.error('👎 Unable to fetch cat videos.');
+      console.error(error);
+      console.error(response);
+    }
+  });
+}
+
+function getRandomCatVideoUrl() {
+  const id = catVideoIds[Math.floor(Math.random() * catVideoIds.length)];
+
+  return `https://www.facebook.com/HappyCatsOnline/videos/${id}`;
+}
+
 app.listen(config.port, function () {
+  retrieveCatVideoIds(function (videoIds) {
+    catVideoIds = videoIds;
+  });
+
   console.log(`✨ Listening on port ${config.port}.`);
 });
