@@ -66,7 +66,12 @@ function sendTextMessage(recipientId, message) {
       id: recipientId
     },
     message: {
-      text: getRandomCatVideoUrl()
+      attachment: {
+        type: 'video',
+        payload: {
+          url: getRandomCatVideoUrl()
+        }
+      }
     }
   });
 }
