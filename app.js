@@ -66,12 +66,7 @@ function sendTextMessage(recipientId, message) {
       id: recipientId
     },
     message: {
-      attachment: {
-        type: 'video',
-        payload: {
-          url: getRandomCatVideoUrl()
-        }
-      }
+      text: getRandomCatVideoUrl()
     }
   });
 }
@@ -125,7 +120,7 @@ function retrieveCatVideoIds(onSuccess) {
 function getRandomCatVideoUrl() {
   const id = catVideoIds[Math.floor(Math.random() * catVideoIds.length)];
 
-  return `https://www.facebook.com/video/embed?video_id=${id}`;
+  return `https://www.facebook.com/HappyCatsOnline/videos/${id}`;
 }
 
 app.listen(config.port, function () {
