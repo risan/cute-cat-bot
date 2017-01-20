@@ -162,6 +162,31 @@ function retrieveCatVideos(onSuccess) {
   });
 }
 
+app.post('/320859818:AAEtttNVMaWNoQuw8UigKgnNEMOVAbBR3go', function (req, res) {
+  const data = req.body;
+
+  if (! data.message) {
+    return res.send('👍 Ok 200.');
+  }
+
+  request({
+    method: 'POST',
+    uri: 'https://api.telegram.org/bot320859818:AAEtttNVMaWNoQuw8UigKgnNEMOVAbBR3go/sendMessage',
+    json: {
+      chat_id: data.message.chat.id,
+      text: data.message.text
+    }
+  }, function (error, response, body) {
+    if (! error && response.statusCode === 200) {
+      return res.send('👍 Message is sent.');
+    }
+
+    console.error(error);
+    console.error(response);
+    return res.status(response.statusCode).send(`👎 Error occured: ${error}`);
+  });
+});
+
 app.listen(config.port, function () {
   retrieveCatVideos(function (videos) {
     catVideos = videos;
