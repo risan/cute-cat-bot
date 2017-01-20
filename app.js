@@ -69,7 +69,7 @@ function sendTextMessage(recipientId, message) {
       attachment: {
         type: 'video',
         payload: {
-          url: getRandomCatVideoUrl()
+          url: 'https://youtu.be/0WyR5GOJXvc'
         }
       }
     }
