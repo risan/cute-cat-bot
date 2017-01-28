@@ -2,6 +2,7 @@ const config = require('config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
+const path = require('path');
 
 const app = express();
 let catVideos = [];
@@ -11,6 +12,10 @@ app.use(express.static('public'));
 
 app.get('/', function (req, res) {
   res.send("Hello I'm a Cute Cat Bot 🐱");
+});
+
+app.get('/privacy-policy', function (req, res) {
+  res.sendFile(path.join(__dirname + '/privacy-policy.html'));
 });
 
 app.get('/webhook', function (req, res) {
