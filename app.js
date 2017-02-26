@@ -102,12 +102,12 @@ function sendMessage(data) {
     json: data
   }, function (error, response, body) {
     if (! error && response.statusCode === 200) {
-      console.log(`👍 Successfully sent a message #${body.message_id} to ${body.recipient_id}.`);
-    } else {
-      console.error('👎 Unable to send message.');
-      console.error(error);
-      console.error(response);
+      return console.log(`👍 Successfully sent a message #${body.message_id} to ${body.recipient_id}.`);
     }
+
+    console.error('👎 Unable to send message.');
+    console.error(error);
+    console.error(response);
   });
 }
 
