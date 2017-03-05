@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const path = require('path');
-const catVideoUrls = require('./cat-video-urls');
+const catVideoUrl = require('./cat-video-url');
 
 const app = express();
 
@@ -69,15 +69,11 @@ function sendRandomCatMessage(recipientId) {
       attachment: {
         type: 'video',
         payload: {
-          url: getRandomCatVideoUrl()
+          url: catVideoUrl.random()
         }
       }
     }
   });
-}
-
-function getRandomCatVideoUrl() {
-  return catVideoUrls[Math.floor(Math.random() * catVideoUrls.length)];
 }
 
 function sendMessage(data) {
