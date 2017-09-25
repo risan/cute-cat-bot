@@ -1,5 +1,0 @@
-{
-	"port": 3000,
-	"verify_token": "YOUR_VERIFY_TOKEN",
-	"page_access_token": "YOUR_PAGE_ACCESS_TOKEN"
-}

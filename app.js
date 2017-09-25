@@ -1,4 +1,4 @@
-const config = require('config');
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
@@ -11,15 +11,11 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.send("Hello I'm a Cute Cat Bot 🐱");
-});
-
-app.get('/privacy-policy', function (req, res) {
-  res.sendFile(path.join(__dirname + '/privacy-policy.html'));
+  res.type('text/plain').send("Hello I'm a Cute Cat Bot 🐱");
 });
 
 app.get('/webhook', function (req, res) {
-  if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === config.verify_token) {
+  if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === process.env.FB_VERIFY_TOKEN) {
     return res.send(req.query['hub.challenge']);
   }
 
@@ -81,7 +77,7 @@ function sendMessage(data) {
     method: 'POST',
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: {
-      access_token: config.page_access_token
+      access_token: process.env.FB_PAGE_ACCESS_TOKEN
     },
     json: data
   }, function (error, response, body) {
@@ -120,6 +116,6 @@ app.post('/320859818:AAEtttNVMaWNoQuw8UigKgnNEMOVAbBR3go', function (req, res) {
   });
 });
 
-app.listen(config.port, function () {
-  console.log(`✨ Listening on port ${config.port}.`);
+app.listen(process.env.PORT, function () {
+  console.log(`✨ Listening on port ${process.env.PORT}.`);
 });
