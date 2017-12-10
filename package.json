@@ -4,9 +4,9 @@
   "description": "Facebook Messenger bot that will reply your chat with a cute cat gif",
   "author": "Risan Bagja Pradana",
   "license": "MIT",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
