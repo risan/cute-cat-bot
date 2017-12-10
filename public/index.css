@@ -1,0 +1,16 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: beige;
+}
+
+p {
+    font-size: 24px;
+}
