@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const request = require('request');
 const config = require('./config');
 const HttpStatus = require('./utils/http-status');
 const WebhookValidator = require('./fb-messenger/webhook-validator');
@@ -27,14 +28,14 @@ router.post('/webhook', (req, res) => {
 });
 
 function onReceivedMessage(event) {
-  const recipientId = event.recipient.id;
+  const senderId = event.sender.id;
 
   sendMessage({
     recipient: {
-      id: recipientId
+      id: senderId
     },
     message: {
-      text: 'Hello World'
+      text: 'Hello World 🌎'
     }
   });
 }
@@ -53,8 +54,7 @@ function sendMessage(data) {
     }
 
     console.error('👎 Unable to send message.');
-    console.error(error);
-    console.error(response);
+    console.error(body.error);
   });
 }
 
