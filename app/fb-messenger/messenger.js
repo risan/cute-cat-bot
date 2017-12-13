@@ -84,6 +84,28 @@ class Messenger {
     }, messagingType);
   }
 
+  sendReadReceipt(recipientId, messagingType = MessagingType.RESPONSE) {
+    this.sendAction(recipientId, 'mark_seen', messagingType);
+  }
+
+  sendTypingOn(recipientId, messagingType = MessagingType.RESPONSE) {
+    this.sendAction(recipientId, 'typing_on', messagingType);
+  }
+
+  sendTypingOff(recipientId, messagingType = MessagingType.RESPONSE) {
+    this.sendAction(recipientId, 'typing_off', messagingType);
+  }
+
+  sendAction(recipientId, action, messagingType = MessagingType.RESPONSE) {
+    this.send({
+      messaging_type: messagingType,
+      recipient: {
+        id: recipientId
+      },
+      sender_action: action
+    });
+  }
+
   sendAttachment(recipientId, url, type = 'file', messagingType = MessagingType.RESPONSE) {
     this.sendMessage(recipientId, {
       attachment: {
