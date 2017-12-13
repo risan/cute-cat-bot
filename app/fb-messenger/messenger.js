@@ -39,10 +39,27 @@ class Messenger {
     }, messagingType);
   }
 
+  sendButtonTemplate(recipientId, text, buttons, messagingType = MessagingType.RESPONSE) {
+    this.sendTemplate(recipientId, {
+      template_type: 'button',
+      text,
+      buttons
+    }, messagingType);
+  }
+
   sendAttachment(recipientId, url, type = 'file', messagingType = MessagingType.RESPONSE) {
     this.sendMessage(recipientId, {
       attachment: {
         type, payload: {url}
+      }
+    }, messagingType);
+  }
+
+  sendTemplate(recipientId, payload, messagingType = MessagingType.RESPONSE) {
+    this.sendMessage(recipientId, {
+      attachment: {
+        type: 'template',
+        payload
       }
     }, messagingType);
   }
