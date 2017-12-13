@@ -13,34 +13,34 @@ class Messenger {
   }
 
   sendText(recipientId, text, messagingType = MessagingType.RESPONSE) {
-    this.sendMessage(recipientId, {text}, messagingType);
+    return this.sendMessage(recipientId, {text}, messagingType);
   }
 
   sendImage(recipientId, url, messagingType = MessagingType.RESPONSE) {
-    this.sendAttachment(recipientId, url, 'image', messagingType);
+    return this.sendAttachment(recipientId, url, 'image', messagingType);
   }
 
   sendAudio(recipientId, url, messagingType = MessagingType.RESPONSE) {
-    this.sendAttachment(recipientId, url, 'audio', messagingType);
+    return this.sendAttachment(recipientId, url, 'audio', messagingType);
   }
 
   sendVideo(recipientId, url, messagingType = MessagingType.RESPONSE) {
-    this.sendAttachment(recipientId, url, 'video', messagingType);
+    return this.sendAttachment(recipientId, url, 'video', messagingType);
   }
 
   sendFile(recipientId, url, messagingType = MessagingType.RESPONSE) {
-    this.sendAttachment(recipientId, url, 'file', messagingType);
+    return this.sendAttachment(recipientId, url, 'file', messagingType);
   }
 
   sendQuickReply(recipientId, text, replies, messagingType = MessagingType.RESPONSE) {
-    this.sendMessage(recipientId, {
+    return this.sendMessage(recipientId, {
       text,
       quick_replies: replies
     }, messagingType);
   }
 
   sendButtonTemplate(recipientId, text, buttons, messagingType = MessagingType.RESPONSE) {
-    this.sendTemplate(recipientId, {
+    return this.sendTemplate(recipientId, {
       template_type: 'button',
       text,
       buttons
@@ -48,14 +48,14 @@ class Messenger {
   }
 
   sendGenericTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
-    this.sendTemplate(recipientId, {
+    return this.sendTemplate(recipientId, {
       template_type: 'generic',
       elements
     }, messagingType);
   }
 
   sendListTemplate(recipientId, topElementStyle, elements, messagingType = MessagingType.RESPONSE) {
-    this.sendTemplate(recipientId, {
+    return this.sendTemplate(recipientId, {
       template_type: 'list',
       top_element_style: topElementStyle,
       elements
@@ -63,14 +63,14 @@ class Messenger {
   }
 
   sendOpenGraphTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
-    this.sendTemplate(recipientId, {
+    return this.sendTemplate(recipientId, {
       template_type: 'open_graph',
       elements
     }, messagingType);
   }
 
   sendReceiptTemplate(recipientId, payload, elements, messagingType = MessagingType.RESPONSE) {
-    this.sendTemplate(recipientId, {
+    return this.sendTemplate(recipientId, {
       ...payload,
       template_type: 'receipt',
       elements
@@ -78,26 +78,26 @@ class Messenger {
   }
 
   sendMediaTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
-    this.sendTemplate(recipientId, {
+    return this.sendTemplate(recipientId, {
       template_type: 'media',
       elements
     }, messagingType);
   }
 
   sendReadReceipt(recipientId, messagingType = MessagingType.RESPONSE) {
-    this.sendAction(recipientId, 'mark_seen', messagingType);
+    return this.sendAction(recipientId, 'mark_seen', messagingType);
   }
 
   sendTypingOn(recipientId, messagingType = MessagingType.RESPONSE) {
-    this.sendAction(recipientId, 'typing_on', messagingType);
+    return this.sendAction(recipientId, 'typing_on', messagingType);
   }
 
   sendTypingOff(recipientId, messagingType = MessagingType.RESPONSE) {
-    this.sendAction(recipientId, 'typing_off', messagingType);
+    return this.sendAction(recipientId, 'typing_off', messagingType);
   }
 
   sendAction(recipientId, action, messagingType = MessagingType.RESPONSE) {
-    this.send({
+    return this.send({
       messaging_type: messagingType,
       recipient: {
         id: recipientId
@@ -107,7 +107,7 @@ class Messenger {
   }
 
   sendAttachment(recipientId, url, type = 'file', messagingType = MessagingType.RESPONSE) {
-    this.sendMessage(recipientId, {
+    return this.sendMessage(recipientId, {
       attachment: {
         type, payload: {url}
       }
@@ -115,7 +115,7 @@ class Messenger {
   }
 
   sendTemplate(recipientId, payload, messagingType = MessagingType.RESPONSE) {
-    this.sendMessage(recipientId, {
+    return this.sendMessage(recipientId, {
       attachment: {
         type: 'template',
         payload
@@ -124,7 +124,7 @@ class Messenger {
   }
 
   sendMessage(recipientId, message, messagingType = MessagingType.RESPONSE) {
-    this.send({
+    return this.send({
       messaging_type: messagingType,
       recipient: {
         id: recipientId
@@ -134,25 +134,28 @@ class Messenger {
   }
 
   send(data) {
-    axios.post(`https://graph.facebook.com/v${this.apiVersion}/me/messages`, data, { 
-      headers: { 
-        Authorization: `Bearer ${this.pageAccessToken}`
-      } 
-    }).then(response => {
-      console.log({sendResponseSuccess: response.data});
-    }).catch(error => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx.
-        console.error('Failed calling send API', error.response.data.error);
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and 
-        // an instance of http.ClientRequest in node.js
-        console.error('Failed calling send API, no response was received', error.request);
-      } else {
-        console.error(error);
-      }
+    return new Promise((resolve, reject) => {
+      axios.post(`https://graph.facebook.com/v${this.apiVersion}/me/messages`, data, {
+        headers: {
+          Authorization: `Bearer ${this.pageAccessToken}`
+        }
+      }).then(response => {
+        resolve(response.data);
+      }).catch(error => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx.
+          const {message, type, code} = error.response.data.error;
+          reject(new Error(`Failed calling send API: [${code}][${type}] ${message}`));
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and 
+          // an instance of http.ClientRequest in node.js
+          reject(new Error('Failed calling send API, no response was received.'));
+        } else {
+          reject(error);
+        }
+      });
     });
   }
 }

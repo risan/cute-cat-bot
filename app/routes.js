@@ -34,7 +34,9 @@ function onReceivedMessage(event) {
   console.log(`Received message from ${senderId}`);
   console.log(event.message);
 
-  messenger.sendText(senderId, event.message.text.toUpperCase());
+  messenger.sendText(senderId, event.message.text.toUpperCase())
+    .then(res => console.log(res))
+    .catch(e => console.error(e.message));
 }
 
 module.exports = router;
