@@ -47,6 +47,43 @@ class Messenger {
     }, messagingType);
   }
 
+  sendGenericTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
+    this.sendTemplate(recipientId, {
+      template_type: 'generic',
+      elements
+    }, messagingType);
+  }
+
+  sendListTemplate(recipientId, topElementStyle, elements, messagingType = MessagingType.RESPONSE) {
+    this.sendTemplate(recipientId, {
+      template_type: 'list',
+      top_element_style: topElementStyle,
+      elements
+    }, messagingType);
+  }
+
+  sendOpenGraphTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
+    this.sendTemplate(recipientId, {
+      template_type: 'open_graph',
+      elements
+    }, messagingType);
+  }
+
+  sendReceiptTemplate(recipientId, payload, elements, messagingType = MessagingType.RESPONSE) {
+    this.sendTemplate(recipientId, {
+      ...payload,
+      template_type: 'receipt',
+      elements
+    }, messagingType);
+  }
+
+  sendMediaTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
+    this.sendTemplate(recipientId, {
+      template_type: 'media',
+      elements
+    }, messagingType);
+  }
+
   sendAttachment(recipientId, url, type = 'file', messagingType = MessagingType.RESPONSE) {
     this.sendMessage(recipientId, {
       attachment: {
