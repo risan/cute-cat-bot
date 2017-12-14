@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('./config');
 const HttpStatus = require('./utils/http-status');
+const catLanguageInputValidator = require('./utils/cat-language-validator');
 const Messenger = require('./fb-messenger/messenger');
 const WebhookValidator = require('./fb-messenger/webhook-validator');
 const WebhookHandler = require('./fb-messenger/webhook-handler');
@@ -14,7 +15,6 @@ webhookHandler.on('message', onReceivedMessage);
 
 router.get('/webhook', (req, res) => {
   try {
-    console.log('Validating webhook...');
     const challange = webhookValidator.validate(req);
     res.status(HttpStatus.OK).send(challange);
   } catch (e) {
@@ -25,16 +25,45 @@ router.get('/webhook', (req, res) => {
 
 router.post('/webhook', (req, res) => {
   webhookHandler.handle(req);
-  console.log('Webhook is received 👍');
   return res.status(HttpStatus.OK).send('Webhook is received 👍');
 });
 
-function onReceivedMessage(event) {
-  const senderId = event.sender.id;
-  console.log(`Received message from ${senderId}`);
-  console.log(event.message);
+function onReceivedMessage({sender: {id: senderId}, message: {text}}) {
+  if (catLanguageInputValidator.isValid(text)) {
+    return sendValidInputResponse(senderId);
+  }
 
-  messenger.sendText(senderId, event.message.text.toUpperCase())
+  sendInvalidInputResponse(senderId);
+}
+
+function sendValidInputResponse(recipientId) {
+  messenger.sendImage(recipientId, 'https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif')
+    .then(res => console.log(res))
+    .catch(e => console.error(e.message));
+}
+
+function sendInvalidInputResponse(recipientId) {
+  messenger.sendQuickReply(recipientId, 'Cat does not understand your language 🐈', [
+    {
+      content_type: 'text',
+      title: 'Meow',
+      payload: 'MEOW_CLICKED',
+    },
+    {
+      content_type: 'text',
+      title: 'Pusss',
+      payload: 'PUSSS_CLICKED',
+    },
+    {
+      content_type: 'text',
+      title: 'Purrr',
+      payload: 'PURRR_CLICKED',
+    },
+    {
+      content_type: 'text',
+      title: 'Nyaaar',
+      payload: 'NYAAAR_CLICKED',
+    }])
     .then(res => console.log(res))
     .catch(e => console.error(e.message));
 }
