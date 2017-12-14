@@ -7,6 +7,9 @@ const config = {
     appSecret: process.env.FB_APP_SECRET,
     verifyToken: process.env.FB_VERIFY_TOKEN,
     pageAccessToken: process.env.FB_PAGE_ACCESS_TOKEN
+  },
+  giphy: {
+    apiKey: process.env.GIPHY_API_KEY
   }
 };
 

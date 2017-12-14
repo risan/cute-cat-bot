@@ -1,14 +1,20 @@
 const config = require('./config');
 const Messenger = require('./fb-messenger/messenger');
+const Giphy = require('./giphy');
 
 class Reply {
   constructor() {
     this.messenger = new Messenger({ pageAccessToken: config.facebook.pageAccessToken, apiVersion: config.facebook.apiVersion });
+    this.giphy = new Giphy(config.giphy.apiKey);
   }
 
   sendRandomCatGif(recipientId) {
-    this.messenger.sendImage(recipientId, 'https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif')
-      .then(res => {})
+    this.giphy.random({ tag: 'cat' })
+      .then(({ data: { fixed_width_downsampled_url: imageUrl } }) => {
+        this.messenger.sendImage(recipientId, imageUrl)
+          .then(res => {})
+          .catch(e => console.error(e.message));
+      })
       .catch(e => console.error(e.message));
   }
 
