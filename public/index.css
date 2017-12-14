@@ -3,6 +3,7 @@ html, body {
 }
 
 body {
+    font-size: 18px;
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     display: flex;
     justify-content: center;
@@ -11,6 +12,37 @@ body {
     background: beige;
 }
 
+.container {
+    padding: 20px;
+    max-width: 550px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
 p {
-    font-size: 24px;
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+}
+
+a:link, a:visited {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    color: blue;
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 2rem;
+}
+
+footer p {
+    font-size: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    margin: 1rem 0;
 }

@@ -1,12 +1,25 @@
 body {
-    font-size: 16px;
+    font-size: 18px;
     font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     margin: 0;
     background: beige;
 }
 
 article {
-  padding: 20px;
-  max-width: 540px;
-  margin: auto;
+    padding: 20px;
+    max-width: 550px;
+    margin: auto;
+}
+
+a:link, a:visited {
+    color: blue;
+}
+
+a:hover, a:active {
+    color: coral;
+}
+
+.homepage-link {
+    font-size: 3rem;
+    text-decoration: none;
 }
