@@ -8,14 +8,14 @@ class Reply {
     this.giphy = new Giphy(config.giphy.apiKey);
   }
 
-  sendRandomCatGif(recipientId) {
-    this.giphy.random({ tag: 'cat' })
-      .then(({ data: { fixed_width_downsampled_url: imageUrl } }) => {
-        this.messenger.sendImage(recipientId, imageUrl)
-          .then(res => {})
-          .catch(e => console.error(e.message));
-      })
-      .catch(e => console.error(e.message));
+  async sendRandomCatGif(recipientId) {
+    try {
+      const { data } = await this.giphy.random({ tag: 'cat' });
+
+      return await this.messenger.sendImage(recipientId, data.fixed_width_downsampled_url);
+    } catch(e) {
+      console.error(e.message);
+    }
   }
 
   sendForInvalidInput(recipientId) {
