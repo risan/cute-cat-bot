@@ -6,7 +6,7 @@ A Facebook Messenger bot that will reply your chat with a cute cat GIF. Try it [
 
 ## Requirements
 The following items are required to run this application sample:
-* [Node.js](https://nodejs.org) version 8.2 or higher
+* [Node.js](https://nodejs.org) version 8.3 or higher
 * [Ngrok](https://ngrok.com) for testing locally
 * [Facebook App](https://developers.facebook.com/apps) for your chat bot
 * [Facebook Page](https://www.facebook.com/bookmarks/pages) that will be the face of your Messenger app
