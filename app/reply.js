@@ -1,16 +1,16 @@
 const config = require('./config');
 const Messenger = require('./fb-messenger/messenger');
-const Giphy = require('./giphy');
+const GiphyRandom = require('giphy-random');
 
 class Reply {
   constructor() {
     this.messenger = new Messenger({ pageAccessToken: config.facebook.pageAccessToken, apiVersion: config.facebook.apiVersion });
-    this.giphy = new Giphy(config.giphy.apiKey);
+    this.giphyRandom = new GiphyRandom({ apiKey: config.giphy.apiKey });
   }
 
   async sendRandomCatGif(recipientId) {
     try {
-      const { data } = await this.giphy.random({ tag: 'cat' });
+      const { data } = await this.giphyRandom.get({ tag: 'cat' });
 
       return await this.messenger.sendImage(recipientId, data.fixed_width_downsampled_url);
     } catch(e) {
