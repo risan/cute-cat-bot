@@ -10,7 +10,7 @@ class Reply {
 
   async sendRandomCatGif(recipientId) {
     try {
-      const { data } = await this.giphyRandom.get({ tag: 'cat' });
+      const data = await this.giphyRandom.get({ tag: 'cat' });
 
       return await this.messenger.sendImage(recipientId, data.fixed_width_downsampled_url);
     } catch(e) {
