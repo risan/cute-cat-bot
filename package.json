@@ -2,15 +2,23 @@
   "name": "cute-cat-bot",
   "version": "2.0.0",
   "description": "Facebook Messenger bot that will reply your chat with a cute cat gif",
-  "author": "Risan Bagja Pradana",
-  "license": "MIT",
+  "author": {
+    "name": "Risan Bagja Pradana",
+    "email": "risanbagja@gmail.com",
+    "url": "https://risan.io"
+  },
   "main": "app/server.js",
-  "scripts": {
-    "start": "node app/server.js"
+  "engines": {
+    "node": "8.x"
+  },
+  "homepage": "https://github.com/risan/cute-cat-bot#readme",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/risan/cute-cat-bot/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/risan/cute-cate-bot"
+    "url": "git+https://github.com/risan/cute-cat-bot.git"
   },
   "keywords": [
     "express",
@@ -20,8 +28,8 @@
     "cat",
     "bot"
   ],
-  "engines": {
-    "node": "8.x"
+  "scripts": {
+    "start": "node app/server.js"
   },
   "dependencies": {
     "axios": "^0.17.1",
