@@ -39,7 +39,8 @@
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
-    "giphy-random": "^1.0.3"
+    "giphy-random": "^1.0.3",
+    "messenger-client": "^1.0.0-alpha.1"
   },
   "devDependencies": {
     "eslint": "^4.13.1",
