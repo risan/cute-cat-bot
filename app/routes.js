@@ -12,13 +12,16 @@ const reply = new Reply();
 const webhookValidator = new WebhookValidator(config.facebook.verifyToken);
 const webhookHandler = new WebhookHandler();
 
-webhookHandler.on('message', ({ sender: { id: senderId }, message: { text } }) => {
-  if (catLanguageInputValidator.isValid(text)) {
-    return reply.sendRandomCatGif(senderId);
-  }
+webhookHandler.on(
+  'message',
+  ({ sender: { id: senderId }, message: { text } }) => {
+    if (catLanguageInputValidator.isValid(text)) {
+      return reply.sendRandomCatGif(senderId);
+    }
 
-  return reply.sendForInvalidInput(senderId);
-});
+    return reply.sendForInvalidInput(senderId);
+  }
+);
 
 router.get('/webhook', (req, res) => {
   try {

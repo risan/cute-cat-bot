@@ -23,7 +23,8 @@ class SignatureVerifier {
   }
 
   hash(data) {
-    return crypto.createHmac('sha1', this.appSecret)
+    return crypto
+      .createHmac('sha1', this.appSecret)
       .update(data)
       .digest('hex');
   }

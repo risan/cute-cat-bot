@@ -31,56 +31,116 @@ class Messenger {
     return this.sendAttachment(recipientId, url, 'file', messagingType);
   }
 
-  sendQuickReply(recipientId, text, replies, messagingType = MessagingType.RESPONSE) {
-    return this.sendMessage(recipientId, {
-      text,
-      quick_replies: replies,
-    }, messagingType);
+  sendQuickReply(
+    recipientId,
+    text,
+    replies,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendMessage(
+      recipientId,
+      {
+        text,
+        quick_replies: replies
+      },
+      messagingType
+    );
   }
 
-  sendButtonTemplate(recipientId, text, buttons, messagingType = MessagingType.RESPONSE) {
-    return this.sendTemplate(recipientId, {
-      template_type: 'button',
-      text,
-      buttons,
-    }, messagingType);
+  sendButtonTemplate(
+    recipientId,
+    text,
+    buttons,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendTemplate(
+      recipientId,
+      {
+        template_type: 'button',
+        text,
+        buttons
+      },
+      messagingType
+    );
   }
 
-  sendGenericTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
-    return this.sendTemplate(recipientId, {
-      template_type: 'generic',
-      elements,
-    }, messagingType);
+  sendGenericTemplate(
+    recipientId,
+    elements,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendTemplate(
+      recipientId,
+      {
+        template_type: 'generic',
+        elements
+      },
+      messagingType
+    );
   }
 
-  sendListTemplate(recipientId, topElementStyle, elements, messagingType = MessagingType.RESPONSE) {
-    return this.sendTemplate(recipientId, {
-      template_type: 'list',
-      top_element_style: topElementStyle,
-      elements,
-    }, messagingType);
+  sendListTemplate(
+    recipientId,
+    topElementStyle,
+    elements,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendTemplate(
+      recipientId,
+      {
+        template_type: 'list',
+        top_element_style: topElementStyle,
+        elements
+      },
+      messagingType
+    );
   }
 
-  sendOpenGraphTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
-    return this.sendTemplate(recipientId, {
-      template_type: 'open_graph',
-      elements,
-    }, messagingType);
+  sendOpenGraphTemplate(
+    recipientId,
+    elements,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendTemplate(
+      recipientId,
+      {
+        template_type: 'open_graph',
+        elements
+      },
+      messagingType
+    );
   }
 
-  sendReceiptTemplate(recipientId, payload, elements, messagingType = MessagingType.RESPONSE) {
-    return this.sendTemplate(recipientId, {
-      ...payload,
-      template_type: 'receipt',
-      elements,
-    }, messagingType);
+  sendReceiptTemplate(
+    recipientId,
+    payload,
+    elements,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendTemplate(
+      recipientId,
+      {
+        ...payload,
+        template_type: 'receipt',
+        elements
+      },
+      messagingType
+    );
   }
 
-  sendMediaTemplate(recipientId, elements, messagingType = MessagingType.RESPONSE) {
-    return this.sendTemplate(recipientId, {
-      template_type: 'media',
-      elements,
-    }, messagingType);
+  sendMediaTemplate(
+    recipientId,
+    elements,
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendTemplate(
+      recipientId,
+      {
+        template_type: 'media',
+        elements
+      },
+      messagingType
+    );
   }
 
   sendReadReceipt(recipientId, messagingType = MessagingType.RESPONSE) {
@@ -99,62 +159,89 @@ class Messenger {
     return this.send({
       messaging_type: messagingType,
       recipient: {
-        id: recipientId,
+        id: recipientId
       },
-      sender_action: action,
+      sender_action: action
     });
   }
 
-  sendAttachment(recipientId, url, type = 'file', messagingType = MessagingType.RESPONSE) {
-    return this.sendMessage(recipientId, {
-      attachment: {
-        type, payload: { url },
+  sendAttachment(
+    recipientId,
+    url,
+    type = 'file',
+    messagingType = MessagingType.RESPONSE
+  ) {
+    return this.sendMessage(
+      recipientId,
+      {
+        attachment: {
+          type,
+          payload: { url }
+        }
       },
-    }, messagingType);
+      messagingType
+    );
   }
 
   sendTemplate(recipientId, payload, messagingType = MessagingType.RESPONSE) {
-    return this.sendMessage(recipientId, {
-      attachment: {
-        type: 'template',
-        payload,
+    return this.sendMessage(
+      recipientId,
+      {
+        attachment: {
+          type: 'template',
+          payload
+        }
       },
-    }, messagingType);
+      messagingType
+    );
   }
 
   sendMessage(recipientId, message, messagingType = MessagingType.RESPONSE) {
     return this.send({
       messaging_type: messagingType,
       recipient: {
-        id: recipientId,
+        id: recipientId
       },
-      message,
+      message
     });
   }
 
   send(data) {
     return new Promise((resolve, reject) => {
-      axios.post(`https://graph.facebook.com/v${this.apiVersion}/me/messages`, data, {
-        headers: {
-          Authorization: `Bearer ${this.pageAccessToken}`,
-        },
-      }).then((response) => {
-        resolve(response.data);
-      }).catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx.
-          const { message, type, code } = error.response.data.error;
-          reject(new Error(`Failed calling send API: [${code}][${type}] ${message}`));
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and
-          // an instance of http.ClientRequest in node.js
-          reject(new Error('Failed calling send API, no response was received.'));
-        } else {
-          reject(error);
-        }
-      });
+      axios
+        .post(
+          `https://graph.facebook.com/v${this.apiVersion}/me/messages`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${this.pageAccessToken}`
+            }
+          }
+        )
+        .then(response => {
+          resolve(response.data);
+        })
+        .catch(error => {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx.
+            const { message, type, code } = error.response.data.error;
+            reject(
+              new Error(
+                `Failed calling send API: [${code}][${type}] ${message}`
+              )
+            );
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and
+            // an instance of http.ClientRequest in node.js
+            reject(
+              new Error('Failed calling send API, no response was received.')
+            );
+          } else {
+            reject(error);
+          }
+        });
     });
   }
 }

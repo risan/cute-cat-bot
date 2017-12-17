@@ -8,8 +8,8 @@ class WebhookHandler extends EventEmitter {
       return;
     }
 
-    data.entry.forEach((pageEntry) => {
-      pageEntry.messaging.forEach((event) => {
+    data.entry.forEach(pageEntry => {
+      pageEntry.messaging.forEach(event => {
         if (event.message) {
           // When a message has been sent by your page.
           if (event.message.is_echo) {
