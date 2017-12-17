@@ -1,10 +1,10 @@
 const config = require('./config');
-const Messenger = require('./fb-messenger/messenger');
+const MessengerClient = require('messenger-client');
 const GiphyRandom = require('giphy-random');
 
 class Reply {
   constructor() {
-    this.messenger = new Messenger({
+    this.messengerClient = new MessengerClient({
       pageAccessToken: config.facebook.pageAccessToken,
       apiVersion: config.facebook.apiVersion
     });
@@ -16,7 +16,7 @@ class Reply {
     try {
       const data = await this.giphyRandom.get({ tag: 'cat' });
 
-      return await this.messenger.sendImage(
+      return await this.messengerClient.sendImage(
         recipientId,
         data.fixed_width_downsampled_url
       );
@@ -28,7 +28,7 @@ class Reply {
   }
 
   sendForInvalidInput(recipientId) {
-    this.messenger
+    this.messengerClient
       .sendQuickReply(recipientId, 'Cat does not understand your language 🐈', [
         {
           content_type: 'text',
