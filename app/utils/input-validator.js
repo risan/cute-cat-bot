@@ -14,7 +14,7 @@ class InputValidator {
       .split(' ')
       .filter(word => this.targetWords.includes(word));
 
-    return matchedWords > 0;
+    return matchedWords.length > 0;
   }
 
   static cleanupText(text) {
