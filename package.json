@@ -29,6 +29,8 @@
     "bot"
   ],
   "scripts": {
+    "lint": "eslint app",
+    "lint-fix": "eslint app --fix",
     "start": "node app/server.js"
   },
   "dependencies": {
