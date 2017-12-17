@@ -4,7 +4,11 @@ const GiphyRandom = require('giphy-random');
 
 class Reply {
   constructor() {
-    this.messenger = new Messenger({ pageAccessToken: config.facebook.pageAccessToken, apiVersion: config.facebook.apiVersion });
+    this.messenger = new Messenger({
+      pageAccessToken: config.facebook.pageAccessToken,
+      apiVersion: config.facebook.apiVersion,
+    });
+
     this.giphyRandom = new GiphyRandom({ apiKey: config.giphy.apiKey });
   }
 
@@ -13,9 +17,11 @@ class Reply {
       const data = await this.giphyRandom.get({ tag: 'cat' });
 
       return await this.messenger.sendImage(recipientId, data.fixed_width_downsampled_url);
-    } catch(e) {
+    } catch (e) {
       console.error(e.message);
     }
+
+    return null;
   }
 
   sendForInvalidInput(recipientId) {
@@ -40,7 +46,7 @@ class Reply {
         title: 'Nyaaar',
         payload: 'NYAAAR_CLICKED',
       }])
-      .then(res => {})
+      .then(() => {})
       .catch(e => console.error(e.message));
   }
 }

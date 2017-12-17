@@ -6,14 +6,14 @@ class SignatureVerifier {
     this.verify = this.verify.bind(this);
   }
 
-  verify(req, res, buf, encoding) {
+  verify(req, res, buf) {
     const signature = req.headers['x-hub-signature'];
 
     if (!signature) {
       throw new Error('No signature found on the request');
     }
 
-    let [method, signatureHash] = signature.split('=');
+    const [, signatureHash] = signature.split('=');
 
     const expectedHash = this.hash(buf);
 

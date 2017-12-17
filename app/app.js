@@ -9,7 +9,7 @@ const app = express();
 const signatureVerifier = new SignatureVerifier(config.facebook.appSecret);
 
 app.set('config', config);
-app.use(bodyParser.json({verify: signatureVerifier.verify}));
+app.use(bodyParser.json({ verify: signatureVerifier.verify }));
 app.use(express.static('public'));
 
 app.use(routes);

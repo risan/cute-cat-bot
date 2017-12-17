@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const config = require('./config');
 const Reply = require('./reply');
@@ -16,7 +17,7 @@ webhookHandler.on('message', ({ sender: { id: senderId }, message: { text } }) =
     return reply.sendRandomCatGif(senderId);
   }
 
-  reply.sendForInvalidInput(senderId);
+  return reply.sendForInvalidInput(senderId);
 });
 
 router.get('/webhook', (req, res) => {
