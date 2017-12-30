@@ -1,5 +1,8 @@
 # Cute Cat Bot
 
+[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/risan/messenger-client)
+[![License](https://img.shields.io/github/license/risan/cute-cat-bot.svg)](https://github.com/risan/cute-cat-bot/blob/master/LICENSE.md)
+
 A Facebook Messenger bot that will reply your chat with a cute cat GIF. Try it [here](https://m.me/CuteCatBot)!
 
 ![Cute Cat Bot](https://media.giphy.com/media/3o6nUZsdAI5o2DevKw/giphy.gif)
@@ -92,3 +95,12 @@ Verify Token: FB_VERIFY_TOKEN from your .env file
 Click the **Verify and Save** button. And once it's verified, you're good to go to test the chat bot 🎉
 
 If you want to change your webhook URL later, head back to the [Facebook App](https://developers.facebook.com/apps) and select your application. You'll find a **Webhook** menu under the products now. Open it and click on the **Edit Subscription** button. You can reconfigure the URL and the verification token.
+
+## Related Packages
+
+* [messenger-client](https://github.com/risan/messenger-client)
+* [giphy-random](https://github.com/risan/giphy-random)
+
+## License
+
+MIT © [Risan Bagja Pradana](https://risan.io)
