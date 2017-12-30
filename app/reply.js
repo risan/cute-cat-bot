@@ -16,10 +16,10 @@ class Reply {
     try {
       const data = await this.giphyRandom.get({ tag: 'cat' });
 
-      return await this.messengerClient.sendImage(
+      return await this.messengerClient.sendImage({
         recipientId,
-        data.fixed_width_downsampled_url
-      );
+        url: data.fixed_width_downsampled_url
+      });
     } catch (e) {
       console.error(e.message);
     }
@@ -29,28 +29,32 @@ class Reply {
 
   sendForInvalidInput(recipientId) {
     this.messengerClient
-      .sendQuickReply(recipientId, 'Cat does not understand your language 🐈', [
-        {
-          content_type: 'text',
-          title: 'Meow',
-          payload: 'MEOW_CLICKED'
-        },
-        {
-          content_type: 'text',
-          title: 'Pusss',
-          payload: 'PUSSS_CLICKED'
-        },
-        {
-          content_type: 'text',
-          title: 'Purrr',
-          payload: 'PURRR_CLICKED'
-        },
-        {
-          content_type: 'text',
-          title: 'Nyaaar',
-          payload: 'NYAAAR_CLICKED'
-        }
-      ])
+      .sendQuickReply({
+        recipientId,
+        text: 'Cat does not understand your language 🐈',
+        replies: [
+          {
+            content_type: 'text',
+            title: 'Meow',
+            payload: 'MEOW_CLICKED'
+          },
+          {
+            content_type: 'text',
+            title: 'Pusss',
+            payload: 'PUSSS_CLICKED'
+          },
+          {
+            content_type: 'text',
+            title: 'Purrr',
+            payload: 'PURRR_CLICKED'
+          },
+          {
+            content_type: 'text',
+            title: 'Nyaaar',
+            payload: 'NYAAAR_CLICKED'
+          }
+        ]
+      })
       .then(() => {})
       .catch(e => console.error(e.message));
   }
