@@ -29,7 +29,7 @@ class Reply {
 
   sendForInvalidInput(recipientId) {
     this.messengerClient
-      .sendQuickReply({
+      .sendQuickReplies({
         recipientId,
         text: 'Cat does not understand your language 🐈',
         replies: [
