@@ -31,7 +31,6 @@
   "scripts": {
     "lint": "eslint app",
     "lint-fix": "eslint app --fix",
-    "prettier": "prettier --write 'app/**/*.js'",
     "start": "node app/server.js"
   },
   "dependencies": {
